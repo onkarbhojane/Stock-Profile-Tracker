@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-const conn= async(dbname)=>{
+const conn= async()=>{
     try{
-        const res=await mongoose.connect(`mongodb+srv://onkarbhojane22:Onkar%401234@cluster0.rdojecr.mongodb.net/${dbname}?retryWrites=true&w=majority&appName=Cluster0`);
+        const res=await mongoose.connect(`mongodb+srv://onkarbhojane22:Onkar%401234@cluster0.rdojecr.mongodb.net/Stock?retryWrites=true&w=majority&appName=Cluster0`);
         if(res){
             console.log("connected to DB")
         }else{
