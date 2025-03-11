@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as cheerio from 'cheerio'
-const API_KEY = "AIzaSyAfi1ny6ADVRcZGZRtYiIh99Df_g5Vb5nM";
+const API_KEY = process.env.API_KEY;
 const API_URL = "https://www.googleapis.com/youtube/v3/";
 
 
