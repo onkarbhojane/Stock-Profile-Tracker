@@ -18,9 +18,9 @@ app.use("/api/user", router);
 app.use("/service", router);
 
 app.use('/stock',router)
-app.get('/',(req,res)=>{
-    console.log("hellor")
-})
+app.get("/", (req, res) => {
+    res.send("Server is working on Vercel!");
+  });
 
 
 
