@@ -1,30 +1,32 @@
 import mongoose from 'mongoose';
-const UserSchema=mongoose.Schema({
-    Name:{
-        type:String
-    },
-    EmailID:{
-        type:String
-    },
-    Password:{
-        type:String
-    },
-    ProfileImage:{
-        type:String
-    },
-    PhoneNo:{
-        type:String
-    },
-    Stocks:[{
-        type:String
-    }],
-    TotalAmount:{
-        type:Number
-    },
-    WalletAmount:{
-        type:Number 
-    },
-})
 
-const user=mongoose.model('user',UserSchema);
-export default user;
+const TransactionSchema = new mongoose.Schema({
+  symbol: String,
+  quantity: Number,
+  price: Number,
+  type: String,
+  date: { type: Date, default: Date.now }
+});
+
+const StockSchema = new mongoose.Schema({
+  symbol: String,
+  quantity: Number,
+  avgPrice: Number,
+  totalInvested: Number
+});
+
+const UserSchema = new mongoose.Schema({
+  Name: String,
+  EmailID: { type: String, unique: true },
+  Password: String,
+  ProfileImage: String,
+  PhoneNo: { type: String, default: '0' },
+  Stocks: [StockSchema],
+  TotalAmount: { type: Number, default: 10000 },
+  WalletAmount: { type: Number, default: 10000 },
+  isVerified: { type: Boolean, default: false },
+  Transactions: [TransactionSchema]
+});
+
+const User = mongoose.model('User', UserSchema);
+export default User;

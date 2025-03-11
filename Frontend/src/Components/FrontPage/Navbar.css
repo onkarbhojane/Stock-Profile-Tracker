@@ -105,11 +105,11 @@ body, html {
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
     padding: 1rem;
-    width: 39%;
+    width: 81.9vh;
     margin-top: 8vh;
     max-height: 50%;
     overflow-y: auto;
-    margin-right: 19.5%;
+    margin-right: 28vh;
 }
 
 .modal-items {
@@ -162,3 +162,13 @@ body, html {
         margin-top: 10px;
     }
 }
+
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  .slide-in {
+    animation: slideIn 0.3s ease-out;
+  }

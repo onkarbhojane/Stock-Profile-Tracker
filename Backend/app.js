@@ -1,24 +1,30 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-import cors from 'cors'
-import router from './Routes/Auth.js';
-import { jwtAuthMiddleware, generateToken } from './Middlewares/JWT.js';
-import conn from './DB/conn.js';
-import NewsScraper from './Utils/NewsScraper.js';
-conn();
+import express from "express";
+import router from "./Routes/Routes.js";
+import cors from "cors";
+import dotenv from "dotenv";  // Correct import
+dotenv.config();  // Load .env variables
+import conn from "./DB/conn.js"
 const app = express();
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
-app.use(express.static('build'));
+const port = process.env.PORT || 3000;
+conn();
+import './Controllers/Auth.js'
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
 app.use(cors());
-app.use('/api/user',router);
-app.get('/',jwtAuthMiddleware, (req, res) => {
-  res.status(200).json({message: 'Hello World'});
-});
-app.use('/scrapweb',router) // This is the route to scrape the news
 
+// Correct route usage
+app.use("/api/user", router);
+app.use("/service", router);
+
+app.use('/stock',router)
+app.get('/',(req,res)=>{
+    console.log("hellor")
+})
+
+
+
+// Start the server
 app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+    console.log(`Server is listening on port ${port}`);
 });
