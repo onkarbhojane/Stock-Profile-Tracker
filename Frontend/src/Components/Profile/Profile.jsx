@@ -55,7 +55,7 @@ const Profile = () => {
 
         if (cookieToken) {
           const response = await axios.get(
-            "http://localhost:3000/api/user/profiledata",
+            "https://stock-profile-tracker-1.onrender.com/api/user/profiledata",
             {
               headers: {
                 Authorization: `Bearer ${cookieToken}`,
@@ -95,7 +95,7 @@ const Profile = () => {
         if (user.Stocks?.length > 0) {
           const promises = user.Stocks.map(async (stock) => {
             const response = await axios.get(
-              "http://localhost:3000/service/stockprice",
+              "https://stock-profile-tracker-1.onrender.com/service/stockprice",
               {
                 params: { symbol:stock.symbol },
                 signal: abortController.signal,

@@ -527,7 +527,7 @@ const Modal = ({
     try {
       console.log("senttttttttttttttttttttt");
       const res = await axios.post(
-        "http://localhost:3000/api/user/login",
+        "https://stock-profile-tracker-1.onrender.com/api/user/login",
         userData
       );
 
@@ -666,7 +666,7 @@ const OTP = ({ userData, otp, close, setOTP }) => {
   const sendOTP = async () => {
     try {
       console.log(otp);
-      const res = await axios.post("http://localhost:3000/api/user/OTPVerify", {
+      const res = await axios.post("https://stock-profile-tracker-1.onrender.com/api/user/OTPVerify", {
         email: userData.email,
         OTP: otp,
       });
@@ -682,7 +682,7 @@ const OTP = ({ userData, otp, close, setOTP }) => {
   const registerUser = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/user/register",
+        "https://stock-profile-tracker-1.onrender.com/api/user/register",
         userData
       );
       console.log(res.data, "res");

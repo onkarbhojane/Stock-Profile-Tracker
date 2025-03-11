@@ -26,7 +26,7 @@ const Main = () => {
       try {
         const encodedCategory = encodeURIComponent(activeCategory);
         const response = await axios.get(
-          `http://localhost:3000/service/knowledge_center?search=${encodedCategory}`
+          `https://stock-profile-tracker-1.onrender.com/service/knowledge_center?search=${encodedCategory}`
         );
         console.log(response.data.videos);
         setContent(response.data.videos);
