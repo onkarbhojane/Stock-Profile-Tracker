@@ -13,6 +13,7 @@ import OTP from './Components/Chart/OTP.jsx'
 import StockTransaction from './Components/Chart/StockTransaction.jsx'
 import Main from './Components/Knowledge Center/Main.jsx'
 import StockNews from './Demo.jsx'
+import About from './Components/Details/About.jsx'
 function App() {
   return (
     <BrowserRouter>
@@ -25,6 +26,7 @@ function App() {
         <Route path='/sip' element={<SIPCalculator/>}/>
         <Route path='/trading' element={<TradingView/>}/>
         <Route path='/dd' element={<StockNews/>}/>
+        <Route path='/about' element={<About/>}/>
         <Route path='/buy/verification' element={<OTP/>}/>
         <Route path ='/stock/verification/done' element={<StockTransaction/>}/>
         <Route path='/knowledge_center' element={<Main/>}/>
