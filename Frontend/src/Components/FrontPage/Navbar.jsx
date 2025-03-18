@@ -43,7 +43,7 @@ const Navbar = ({
     setSearch(value);
     try {
       const res = await axios.get(
-        `http://localhost:3000/service/stocksearch?name=${value.toUpperCase()}`
+        `http://localhost:8080/service/stocksearch?name=${value.toUpperCase()}`
       );
       setSearchResults([...res.data]);
     } catch (error) {

@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { AddStock, ResetTransaction } from "../../Redux/Features/StocksCart";
+import {
+  AddStock,
+  RemoveStock,
+  ResetTransaction,
+} from "../../Redux/Features/StocksCart";
 
 const StockTransaction = () => {
   const navigate = useNavigate();
@@ -38,7 +42,7 @@ const StockTransaction = () => {
 
       try {
         await axios.post(
-          "http://localhost:3000/stock/Transaction",
+          "http://localhost:8080/stock/Transaction",
           { transaction },
           {
             headers: {
@@ -48,13 +52,23 @@ const StockTransaction = () => {
           }
         );
 
-        dispatch(
-          AddStock({
-            Symbol: transaction.Symbol,
-            Quantity: transaction.Quantity,
-            price: transaction.avgPrice,
-          })
-        );
+        if (transaction.Type === "BUY") {
+          dispatch(
+            AddStock({
+              Symbol: transaction.Symbol,
+              Quantity: transaction.Quantity,
+              price: transaction.avgPrice,
+            })
+          );
+        } else {
+          dispatch(
+            RemoveStock({
+              Symbol: transaction.Symbol,
+              Quantity: transaction.Quantity,
+              price: transaction.avgPrice,
+            })
+          );
+        }
       } catch (error) {
         console.error("Transaction error:", error);
       }

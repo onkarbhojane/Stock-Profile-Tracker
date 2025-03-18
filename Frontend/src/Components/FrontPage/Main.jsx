@@ -1,418 +1,11 @@
-// import React, { useEffect, useState } from "react";
-// import "./Main.css";
-// import axios from "axios";
-// import { useSelector, useDispatch } from "react-redux";
-// import "./Navbar";
-// import { useNavigate } from "react-router-dom";
-// import { useRef } from "react";
-// const Main = () => {
-//   const [count1, setCount] = useState(0);
-//   const [isModal, setIsModal] = useState(false);
-//   const count = useSelector((state) => state.Counter);
-//     const [userData, setUserData] = useState({
-//       name: "",
-//       email: "",
-//       password: "",
-//     });
-//   const dispatch = useDispatch();
-//   return (
-//     <div className="Main">
-//       <p className="p1">Empowering Your Trades, Simplifying Your Success</p>
-//       <h1 className="p1">Built for Growing India</h1>
-//       <button onClick={() => setIsModal(true)}>Get Started</button>
-//       {isModal && <Modal userData={userData} close={setIsModal} />}
-//     </div>
-//   );
-// };
-// const Modal = ({ userData, setUserData, setIsOTPModal, setOTP, close }) => {
-//   const [isLogin, setIsLogin] = useState(true);
-
-//   useEffect(() => {
-//     console.log(typeof setIsOTPModal, typeof close);
-//   }, []);
-
-//   const GenerateOTP = () => {
-//     let otpValue = "";
-//     for (let i = 0; i < 6; i++) {
-//       otpValue += Math.floor(Math.random() * 10);
-//     }
-//     setOTP(otpValue);
-//   };
-
-//   const signUp = async () => {
-//     try {
-//       const res = await fetch("http://localhost:3000/api/user/register", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(userData), // ✅ Send as an object
-//       });
-//       const data = await res.json();
-//       console.log(data);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-//   const login = async () => {
-//     try {
-//       const res = await axios.post("http://localhost:3000/api/user/login", {
-//         email: userData.email,
-//         password: userData.password,
-//       });
-//       if (res.status === 200) {
-//         console.log(res, "Login Successful");
-//       }
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-//   const handleModalClick = (event) => {
-//     event.stopPropagation();
-//   };
-
-//   return (
-//     <div
-//       className="Modal flex justify-center items-center fixed inset-0 bg-gray-900 bg-opacity-50"
-//       onClick={() => close(false)}
-//     >
-//       <div className="Modal-content gap-5" onClick={handleModalClick}>
-//         <div className="image">
-//           <h1
-//             style={{
-//               width: "30vh",
-//               color: "white",
-//               margin: "8vh",
-//               fontFamily: "cursive",
-//             }}
-//           >
-//             Simple Free, Investing.
-//           </h1>
-//         </div>
-//         <div>
-//           <button className="close-button" onClick={() => close(false)}>
-//             &times;
-//           </button>
-//           {isLogin ? (
-//             <div
-//               style={{
-//                 paddingTop: "70px",
-//                 fontFamily: "cursive",
-//                 display: "flex",
-//                 flexDirection: "column",
-//                 justifyContent: "space-evenly",
-//                 gap: "15px",
-//               }}
-//             >
-//               <h2>Login</h2>
-//               <input
-//                 type="email"
-//                 value={userData.email || ""} // ✅ Ensure controlled component
-//                 onChange={(e) =>
-//                   setUserData({ ...userData, email: e.target.value })
-//                 }
-//                 placeholder="Email"
-//                 required
-//               />
-
-//               <input
-//                 type="password"
-//                 value={userData.password || ""}
-//                 onChange={(e) =>
-//                   setUserData({ ...userData, password: e.target.value })
-//                 }
-//                 placeholder="Password"
-//                 required
-//               />
-
-//               <button
-//                 type="submit"
-//                 style={{ marginLeft: "20px", paddingRight: "20px" }}
-//                 onClick={login}
-//               >
-//                 Login
-//               </button>
-//               <p>
-//                 Don't have an account?{" "}
-//                 <button className="toggle" onClick={() => setIsLogin(false)}>
-//                   Sign Up
-//                 </button>
-//               </p>
-//             </div>
-//           ) : (
-//             <div
-//               style={{
-//                 paddingTop: "5vh",
-//                 display: "flex",
-//                 flexDirection: "column",
-//                 justifyContent: "center",
-//                 alignItems: "space-evenly",
-//                 gap: "15px",
-//                 fontFamily: "cursive",
-//               }}
-//             >
-//               <h2>Sign Up</h2>
-//               <input
-//                 type="text"
-//                 value={userData.name || ""}
-//                 onChange={(e) =>
-//                   setUserData({ ...userData, name: e.target.value })
-//                 }
-//                 placeholder="Full Name"
-//                 required
-//               />
-
-//               <input
-//                 type="email"
-//                 value={userData.email || ""}
-//                 onChange={(e) =>
-//                   setUserData({ ...userData, email: e.target.value })
-//                 }
-//                 placeholder="Email"
-//                 required
-//               />
-
-//               <input
-//                 type="password"
-//                 value={userData.password || ""}
-//                 onChange={(e) =>
-//                   setUserData({ ...userData, password: e.target.value })
-//                 }
-//                 placeholder="Password"
-//                 required
-//               />
-
-//               <button
-//                 onClick={() => {
-//                   close(false);
-//                   GenerateOTP();
-//                   setIsOTPModal(true);
-//                 }}
-//                 style={{ marginLeft: "20px", paddingRight: "20px" }}
-//               >
-//                 Register
-//               </button>
-
-//               <p>
-//                 Already have an account?{" "}
-//                 <button className="toggle" onClick={() => setIsLogin(true)}>
-//                   Login
-//                 </button>
-//               </p>
-//             </div>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// const ChatBot = ({ close, setModalState }) => {
-//   const [mes, setMes] = useState([]);
-
-//   const handleKeyDown = (e) => {
-//     if (e.key === "Enter" && e.target.value.trim() !== "") {
-//       setMes((prevMes) => [...prevMes, e.target.value]); // Ensure proper state update
-//       e.target.value = ""; // Clear input after Enter
-//     }
-//   };
-
-//   return (
-//     <div className="Modal flex justify-center items-center fixed inset-0 bg-gray-900 bg-opacity-50">
-//       <div className="h-150 w-200 bg-blue-200 rounded-2xl p-4 flex flex-col justify-between">
-//         {/* Close Button */}
-//         <button
-//           onClick={() => {
-//             close(false);
-//             setModalState((prev) => {
-//               console.log(prev, "prev");
-//               return "fixed";
-//             });
-//           }}
-//           className="self-end bg-white text-gray-700 rounded-full p-2 shadow-md"
-//         >
-//           ✕
-//         </button>
-
-//         {/* Chat Messages */}
-//         <div className="flex flex-col space-y-2 overflow-y-auto h-[250px] p-2">
-//           {mes.map((data, index) => (
-//             <div
-//               key={index}
-//               className="bg-white text-gray-900 px-4 py-2 rounded-lg shadow-md w-fit max-w-[80%]"
-//             >
-//               {data}
-//             </div>
-//           ))}
-//         </div>
-
-//         {/* Input Field */}
-//         <div className="bg-blue-100 flex items-center rounded-md p-2">
-//           <input
-//             onKeyDown={handleKeyDown}
-//             className="h-10 w-full rounded-md bg-white px-4 text-gray-800 placeholder-gray-500 outline-none focus:ring-2 focus:ring-blue-400"
-//             placeholder="Enter your Query"
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// const OTP = ({ userData, otp, close }) => {
-//   const [timer, setTimer] = useState(30);
-//   const [otpValue, setOtpValue] = useState(["", "", "", "", "", ""]);
-//   const [errorMessage, setErrorMessage] = useState("");
-//   const navigate = useNavigate();
-//   const inputRefs = useRef([]);
-
-//   // Function to send OTP
-//   const sendOTP = async () => {
-//     console.log("Sending OTP to:", userData.email);
-//     try {
-//       await axios.post("http://localhost:3000/api/user/OTPVerify", {
-//         email: userData.email,
-//         OTP: otp,
-//       });
-//     } catch (error) {
-//       console.log("Error in sending OTP:", error);
-//     }
-//   };
-
-//   // Function to register user
-//   const registerUser = async () => {
-//     try {
-//       const res = await axios.post("http://localhost:3000/api/user/register", {
-//         name: userData.name,
-//         email: userData.email,
-//         password: userData.password,
-//       });
-
-//       if (res.status === 200) {
-//         console.log("User registered successfully!");
-//         navigate("/user/createaccount");
-//       }
-//     } catch (error) {
-//       console.log("Registration error:", error);
-//     }
-//   };
-
-//   // Auto-send OTP when component mounts
-//   useEffect(() => {
-//     sendOTP();
-//   }, []);
-
-//   // Countdown timer
-//   useEffect(() => {
-//     if (timer > 0) {
-//       const interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
-//       return () => clearInterval(interval);
-//     }
-//   }, [timer]);
-
-//   // Handle OTP input change
-//   const handleOtpChange = (index, value) => {
-//     if (!/^\d?$/.test(value)) return; // Allow only digits
-
-//     const newOtp = [...otpValue];
-//     newOtp[index] = value;
-//     setOtpValue(newOtp);
-
-//     if (value && index < 5) {
-//       inputRefs.current[index + 1]?.focus(); // Move to next input
-//     }
-//   };
-
-//   // Handle backspace navigation
-//   const handleKeyDown = (index, event) => {
-//     if (event.key === "Backspace" && !otpValue[index] && index > 0) {
-//       inputRefs.current[index - 1]?.focus();
-//     }
-//   };
-
-//   // Verify OTP
-//   const verifyOTP = () => {
-//     const enteredOtp = otpValue.join("");
-//     if (enteredOtp === otp) {
-//       setErrorMessage("");
-//       registerUser();
-//     } else {
-//       setErrorMessage("Invalid OTP. Please try again.");
-//     }
-//   };
-
-//   return (
-//     <div
-//       className="fixed inset-0 bg-transparent flex justify-center items-center"
-//       onClick={() => close(false)}
-//     >
-//       <div
-//         className="w-[300px] md:w-[400px] p-6 bg-white rounded-lg shadow-xl flex flex-col items-center gap-4"
-//         onClick={(e) => e.stopPropagation()} // Prevent modal from closing on click inside
-//       >
-//         <h1 className="font-bold text-lg">Verify OTP</h1>
-
-//         {/* OTP Inputs */}
-//         <div className="flex gap-2">
-//           {otpValue.map((digit, index) => (
-//             <input
-//               key={index}
-//               type="text"
-//               maxLength="1"
-//               value={digit}
-//               ref={(el) => (inputRefs.current[index] = el)}
-//               onChange={(e) => handleOtpChange(index, e.target.value)}
-//               onKeyDown={(e) => handleKeyDown(index, e)}
-//               className="w-10 h-10 text-center border rounded-md text-lg focus:ring-2 focus:ring-blue-500"
-//               autoFocus={index === 0} // Auto-focus first input
-//             />
-//           ))}
-//         </div>
-
-//         {/* Error Message */}
-//         {errorMessage && <div className="text-red-500 font-medium">{errorMessage}</div>}
-
-//         {/* Verify Button */}
-//         <button
-//           onClick={verifyOTP}
-//           className="bg-green-500 w-40 rounded-md font-bold text-lg text-white h-10
-//                      hover:bg-green-600 active:bg-green-700 focus:outline-none"
-//         >
-//           Verify
-//         </button>
-
-//         {/* Resend OTP or Timer */}
-//         {timer === 0 ? (
-//           <div
-//             onClick={() => {
-//               setTimer(30);
-//               setOtpValue(["", "", "", "", "", ""]); // Clear OTP input
-//               sendOTP();
-//               setErrorMessage(""); // Reset error message
-//             }}
-//             className="text-blue-500 cursor-pointer"
-//           >
-//             Didn't receive OTP? <span className="underline">Resend</span>
-//           </div>
-//         ) : (
-//           <div className="text-gray-600 text-sm text-center">
-//             OTP sent successfully <br />
-//             Time Remaining: {timer}s
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Main;
-// export { Modal, ChatBot, OTP };
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { set } from "mongoose";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../Redux/Features/AuthSlice.js";
+import socketIO from "socket.io-client";
+import { set } from "mongoose";
+const socket = socketIO.connect("http://localhost:8080");
 const Main = () => {
   const [modals, setModals] = useState({
     auth: false,
@@ -528,7 +121,7 @@ const Modal = ({
     try {
       console.log("senttttttttttttttttttttt");
       const res = await axios.post(
-        "http://localhost:3000/api/user/login",
+        `http://localhost:8080/api/user/login `,
         userData
       );
 
@@ -550,6 +143,25 @@ const Modal = ({
     showOTP();
   };
 
+  const verifyUser = async () => {
+    try {
+      console.log(import.meta.env.BACKEND_API);
+      const res = await axios.get(
+        `${
+          import.meta.env.VITE_BACKEND_API || "http://localhost:8080"
+        }/api/user/verifyuser?email=${userData.email}`
+      );
+      console.log("res", res);
+      if (res.status === 202) {
+        setIsOTPModal();
+        handleAuth();
+      } else {
+        setIsLogin(true);
+      }
+    } catch (error) {
+      console.log("error in verify user", error);
+    }
+  };
   return (
     <div className="fixed inset-0 bg-white/90 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-white rounded-xl w-full max-w-md flex shadow-xl border border-gray-300 mx-4">
@@ -627,8 +239,7 @@ const Modal = ({
               type="submit"
               onClick={() => {
                 if (!isLogin) {
-                  setIsOTPModal();
-                  handleAuth();
+                  verifyUser();
                 } else {
                   Login();
                 }
@@ -667,10 +278,16 @@ const OTP = ({ userData, otp, close, setOTP }) => {
   const sendOTP = async () => {
     try {
       console.log(otp);
-      const res = await axios.post("http://localhost:3000/api/user/OTPVerify", {
-        email: userData.email,
-        OTP: otp,
-      });
+      const res = await axios.post(
+        `${
+          import.meta.env.VITE_BACKEND_API || "http://localhost:8080"
+        }/api/user/OTPVerify`,
+        {
+          email: userData.email,
+          OTP: otp,
+        }
+      );
+      console.log("res is OTPVerify, ", res);
     } catch (error) {
       console.log("OTP Error:", error.response?.data?.message || error.message);
     }
@@ -682,8 +299,11 @@ const OTP = ({ userData, otp, close, setOTP }) => {
   const dispatch = useDispatch();
   const registerUser = async () => {
     try {
+      console.log("in register");
       const res = await axios.post(
-        "http://localhost:3000/api/user/register",
+        `${
+          import.meta.env.VITE_BACKEND_API || "http://localhost:8080"
+        }/api/user/register`,
         userData
       );
       console.log(res.data, "res");
@@ -706,6 +326,7 @@ const OTP = ({ userData, otp, close, setOTP }) => {
         close();
       }
     } catch (error) {
+      navigate("/");
       console.error(
         "Registration Error:",
         error.response?.data?.message || error.message
@@ -737,6 +358,7 @@ const OTP = ({ userData, otp, close, setOTP }) => {
   const verifyOTP = () => {
     console.log("otpValue", otpValue.join(""), otp);
     if (otpValue.join("") === otp) {
+      console.log("register called");
       registerUser();
     } else {
       setError("Invalid OTP. Please try again.");
@@ -816,49 +438,118 @@ const OTP = ({ userData, otp, close, setOTP }) => {
   );
 };
 
+// Change to your backend URL
+
 const ChatBot = ({ close, setModalState }) => {
-  const [messages, setMessages] = useState([]);
-  const inputRef = useRef();
-  const [chat, setChat] = useState("AI");
+  const [aiMessage, setaimessage] = useState([]); 
+  const [normalmessage, setnormalMessage] = useState([]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [chatMode, setChatMode] = useState('AI');
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    socket.on('message', (msg) => {
+      // setnormalMessage(prev => [...prev, msg]);
+    });
+
+    return () => {
+      socket.off('message');
+    };
+  }, []);
+
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    if (!inputMessage.trim()) return;
+
+    try {
+      // Add user message immediately
+      const userMessage = {
+        text: inputMessage,
+        isUser: true,
+        id: Date.now().toString(),
+      };
+
+      if (chatMode === 'AI') {
+        setIsLoading(true);
+        const response = await axios.get(
+          `http://localhost:8080/service/chatai?prompt=${encodeURIComponent(inputMessage)}`
+        );
+
+        const responseText = typeof response.data === 'string' 
+          ? response.data 
+          : response.data?.response || response.data?.data || JSON.stringify(response.data);
+
+        const aiResponse = {
+          text: responseText,
+          isUser: false,
+          id: `ai-${Date.now()}`,
+        };
+
+        setaimessage(prev => [...prev, userMessage, aiResponse]);
+      } else {
+        const normalMessage = {
+          text: inputMessage,
+          name: "onkar",
+          id: `${socket.id}-${Date.now()}`,
+          socketID: socket.id,
+          isUser: false,
+        };
+
+        socket.emit('message', normalMessage);
+        setnormalMessage(prev => [...prev, userMessage, normalMessage]);
+      }
+
+      setInputMessage('');
+    } catch (error) {
+      console.error('Error:', error);
+      const errorMessage = {
+        text: 'Failed to get response',
+        isUser: false,
+        id: `error-${Date.now()}`,
+      };
+
+      if (chatMode === 'AI') {
+        setaimessage(prev => [...prev, errorMessage]);
+      } else {
+        setnormalMessage(prev => [...prev, errorMessage]);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && e.target.value.trim()) {
-      setMessages([...messages, { text: e.target.value, isUser: true }]);
-      e.target.value = "";
+    if (e.key === 'Enter' && !isLoading) {
+      handleSendMessage(e);
     }
   };
 
   return (
-    <div className="fixed inset-0 round bg-black/30 backdrop-blur-sm rounded-2xl flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm rounded-2xl flex items-center justify-center z-50">
       <div className="bg-white w-full max-w-md h-[70vh] flex flex-col shadow-2xl border border-gray-200">
         {/* Header */}
         <div className="flex justify-between items-center p-5 border-b border-gray-200 bg-gradient-to-r from-emerald-50 to-white">
           <div className="flex items-center space-x-3">
-            <div className="p-2 bg-emerald-500/10 rounded-xl">
-              <svg className="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-              </svg>
-            </div>
             <h3 className="text-lg font-bold text-gray-800">Trading Assistant</h3>
           </div>
-          
+
           <div className="flex items-center space-x-2">
             <button
-              onClick={() => setChat("AI")}
+              onClick={() => setChatMode('AI')}
               className={`px-3 py-1 rounded-lg transition-all ${
-                chat === "AI" 
-                ? "bg-emerald-500 text-white shadow-sm" 
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                chatMode === 'AI'
+                  ? 'bg-emerald-500 text-white shadow-sm'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
               AI
             </button>
             <button
-              onClick={() => setChat("Normal")}
+              onClick={() => setChatMode('Normal')}
               className={`px-3 py-1 rounded-lg transition-all ${
-                chat === "Normal" 
-                ? "bg-emerald-500 text-white shadow-sm" 
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                chatMode === 'Normal'
+                  ? 'bg-emerald-500 text-white shadow-sm'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
               Normal
@@ -872,7 +563,12 @@ const ChatBot = ({ close, setModalState }) => {
             }}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
           >
-            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="w-5 h-5 text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -880,17 +576,20 @@ const ChatBot = ({ close, setModalState }) => {
 
         {/* Chat Messages */}
         <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-gray-50/50">
-          {messages.map((msg, index) => (
+          {(chatMode === 'AI' ? aiMessage : normalmessage).map((msg) => (
             <div
-              key={index}
-              className={`p-3.5 rounded-2xl max-w-[85%] shadow-sm ${
-                msg.isUser
-                  ? "bg-emerald-500/10 ml-auto text-emerald-600 border border-emerald-500/20"
-                  : "bg-white text-gray-700 border border-gray-200"
-              }`}
-            >
-              {msg.text}
-            </div>
+            key={msg.id}
+            className={`p-3.5 rounded-2xl max-w-[85%] shadow-sm ${
+              msg.isUser
+                ? 'bg-emerald-500/10 ml-auto text-emerald-600 border border-emerald-500/20'
+                : 'bg-white text-gray-700 border border-gray-200'
+            }`}
+          >
+            {msg.text}
+            {isLoading && msg.id === (chatMode === 'AI' ? aiMessage : normalmessage)[(chatMode === 'AI' ? aiMessage : normalmessage).length - 1]?.id && (
+              <div className="inline-block ml-2 animate-pulse">...</div>
+            )}
+          </div>
           ))}
         </div>
 
@@ -898,13 +597,24 @@ const ChatBot = ({ close, setModalState }) => {
         <div className="p-5 border-t border-gray-200 bg-white">
           <div className="relative">
             <input
-              ref={inputRef}
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="w-full pl-5 pr-12 py-3.5 bg-gray-100 rounded-xl text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all"
-              placeholder={chat === "AI" ? "Ask me anything..." : "Type your message..."}
+              disabled={isLoading}
+              className="w-full pl-5 pr-12 py-3.5 bg-gray-100 rounded-xl text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all disabled:opacity-50"
+              placeholder={chatMode === 'AI' ? 'Ask me anything...' : 'Type your message...'}
             />
-            <button className="absolute right-3 top-1/2 -translate-y-1/2 p-2 hover:bg-gray-200 rounded-full transition-colors">
-              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button
+              onClick={handleSendMessage}
+              disabled={isLoading}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 hover:bg-gray-200 rounded-full transition-colors disabled:opacity-50"
+            >
+              <svg
+                className="w-5 h-5 text-gray-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
               </svg>
             </button>
@@ -914,6 +624,7 @@ const ChatBot = ({ close, setModalState }) => {
     </div>
   );
 };
+
 
 export default Main;
 export { Modal, ChatBot, OTP };

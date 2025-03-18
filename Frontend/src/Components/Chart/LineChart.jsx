@@ -1,5 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Line } from "react-chartjs-2";
+import candlestickImg from "../../assets/candlestick.png";
+import lineChartImg from "../../assets/line-chart.png";
+import fullScreen from "../../assets/fullscreen.png";
+import ReactApexChart from "react-apexcharts";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -57,6 +61,7 @@ const LineChart = () => {
   const navigate = useNavigate();
   const stock = useSelector((state) => state.StockCart.stockList);
   const refb = useRef(null);
+  const [chart, setChart] = useState("line");
 
   // Reset historical data and symbol when symbol changes
   useEffect(() => {
@@ -74,7 +79,7 @@ const LineChart = () => {
     const fetchStockData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/service/stockprice",
+          "http://localhost:8080/service/stockprice",
           {
             params: { symbol },
             signal: abortController.signal,
@@ -148,7 +153,7 @@ const LineChart = () => {
     const fetchNews = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/service/stocknews?symbol=${symbol}`
+          `http://localhost:8080/service/stocknews?symbol=${symbol}`
         );
         console.log(response.data.news);
         setNews(response.data.news);
@@ -171,7 +176,7 @@ const LineChart = () => {
 
         if (cookieToken) {
           const response = await axios.get(
-            "http://localhost:3000/api/user/profiledata",
+            "http://localhost:8080/api/user/profiledata",
             {
               headers: {
                 Authorization: `Bearer ${cookieToken}`,
@@ -236,13 +241,30 @@ const LineChart = () => {
       navigate("/buy/verification");
     }
   };
-
   const handleSell = () => {
     console.log("Sell order submitted:", {
       quantity,
       price: price || stockData.price,
       total: estimatedCost,
     });
+    console.log(user);
+    const stock = user.Stocks.filter((stock) => {
+      return stockData.symbol === stock.symbol;
+    })[0];
+    console.log(stock);
+    if (stock && stock.quantity >= quantity - "0" && quantity - "0" > 0) {
+      dispatch(
+        InitTransaction({
+          Symbol: stockData.symbol,
+          Quantity: quantity - "0",
+          avgPrice: stockData.price,
+          estimatedCost: estimatedCost,
+          type: "SELL",
+        })
+      );
+      console.log("done");
+      navigate("/sell/verification");
+    }
   };
 
   const chartData = {
@@ -270,7 +292,6 @@ const LineChart = () => {
       },
     ],
   };
-
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -378,29 +399,80 @@ const LineChart = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm">
+            {/* Left Section: Chart Display */}
+            <div className="lg:col-span-2 bg-white p-6 pb-20 rounded-lg shadow-sm text-black">
               <div className="h-96">
-                {loading ? (
-                  <div className="flex items-center justify-center h-full">
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
-                  </div>
-                ) : (
+                {/* Chart Type Selection */}
+                <div className="flex items-center justify-center gap-4 mb-4 ml-160">
+                <button
+                    onClick={() => setChart("line")}
+                    className="bg-white hover:bg-gray-100 text-gray-800 font-semibold p-2 border border-gray-400 rounded shadow"
+                  >
+                    <img className="size-4" src={fullScreen} alt="fullscreen" />
+                  </button>
+                  <button
+                    onClick={() => setChart("line")}
+                    className="bg-white hover:bg-gray-100 text-gray-800 font-semibold p-2 border border-gray-400 rounded shadow"
+                  >
+                    <img className="size-4" src={lineChartImg} alt="line" />
+                  </button>
+                  <button
+                    onClick={() => setChart("candlestick")}
+                    className="bg-white hover:bg-gray-100 text-gray-800 font-semibold p-2 border border-gray-400 rounded shadow"
+                  >
+                    <img className="size-4" src={candlestickImg} alt="candle" />
+                  </button>
+                </div>
+
+                {/* Chart Display */}
+                {chart === "line" ? (
                   <Line
-                    key={symbol}
-                    ref={chartRef}
+                    key={stockData.symbol}
                     data={chartData}
                     options={chartOptions}
                   />
+                ) : (
+                  <ReactApexChart
+                      options={{
+                        chart: {
+                          type: "candlestick",
+                          height: 350,
+                          background: '#fff',
+                          toolbar: { show: false }
+                        },
+                        xaxis: { type: "datetime" },
+                        yaxis: { tooltip: { enabled: true } },
+                        plotOptions: {
+                          candlestick: {
+                            colors: {
+                              upward: '#22C55E',
+                              downward: '#EF4444'
+                            }
+                          }
+                        }
+                      }}
+                      series={[{
+                        data: stockData.historical.map(item => ({
+                          x: item.date,
+                          y: [item.close - 2, item.close + 2, item.close - 1, item.close + 1]
+                        }))
+                      }]}
+                      type="candlestick"
+                      height="100%"
+                    />
                 )}
               </div>
             </div>
+
+            {/* Right Section: Order Form */}
             <div className="bg-white p-6 rounded-lg shadow-sm">
+              {/* Order Type Selection */}
               <div className="flex gap-2 mb-6">
                 <button
                   className={`flex-1 py-2 rounded transition-colors ${
                     orderType === "market"
-                      ? "bg-green-600 text-white hover:bg-green-700"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      ? "bg-green-600 text-white"
+                      : "bg-gray-100 text-gray-700"
                   }`}
                   onClick={() => setOrderType("market")}
                 >
@@ -409,8 +481,8 @@ const LineChart = () => {
                 <button
                   className={`flex-1 py-2 rounded transition-colors ${
                     orderType === "limit"
-                      ? "bg-red-600 text-white hover:bg-red-700"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      ? "bg-red-600 text-white"
+                      : "bg-gray-100 text-gray-700"
                   }`}
                   onClick={() => setOrderType("limit")}
                 >
@@ -418,6 +490,7 @@ const LineChart = () => {
                 </button>
               </div>
 
+              {/* Order Inputs */}
               <div className="space-y-4">
                 {orderType === "limit" && (
                   <div>
@@ -426,7 +499,7 @@ const LineChart = () => {
                     </label>
                     <input
                       type="number"
-                      className="w-full p-2 text-black border rounded focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      className="w-full p-2 text-black border rounded focus:ring-2 focus:ring-green-500"
                       value={price}
                       onChange={(e) => setPrice(e.target.value)}
                       placeholder={`Current: ₹${stockData.price.toFixed(2)}`}
@@ -440,7 +513,7 @@ const LineChart = () => {
                   </label>
                   <input
                     type="number"
-                    className="w-full p-2 border rounded text-black focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    className="w-full p-2 border rounded text-black focus:ring-2 focus:ring-green-500"
                     value={quantity}
                     onChange={(e) => {
                       setQuantity(e.target.value);
@@ -456,6 +529,7 @@ const LineChart = () => {
                   />
                 </div>
 
+                {/* Order Summary */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm text-gray-700">
                     <span className="font-medium">Available Cash</span>
@@ -466,26 +540,23 @@ const LineChart = () => {
                   <div className="flex justify-between text-sm text-gray-700">
                     <span className="font-medium">Estimated Cost</span>
                     <span className="font-semibold">
-                      ₹
-                      {estimatedCost.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
+                      ₹{estimatedCost.toFixed(2)}
                     </span>
                   </div>
                 </div>
 
+                {/* Buy & Sell Buttons */}
                 <div className="space-y-2">
                   <button
                     ref={refb}
                     onClick={handleBuy}
-                    className="w-full py-3 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                    className="w-full py-3 bg-green-600 text-white rounded hover:bg-green-700"
                   >
                     Buy {stockData.symbol}
                   </button>
                   <button
                     onClick={handleSell}
-                    className="w-full py-3 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                    className="w-full py-3 bg-red-600 text-white rounded hover:bg-red-700"
                   >
                     Sell {stockData.symbol}
                   </button>

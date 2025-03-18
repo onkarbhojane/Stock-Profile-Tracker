@@ -25,7 +25,7 @@ const OTP = ({ close }) => {  // Added close prop for modal dismissal
   const sendOTP = async (generatedOTP) => {
     try {
       await axios.post(
-        "http://localhost:3000/stock/verification",
+        "http://localhost:8080/stock/verification",
         {
           email: user.EmailID,
           OTP: generatedOTP,
@@ -38,7 +38,7 @@ const OTP = ({ close }) => {  // Added close prop for modal dismissal
         }
       );
     } catch (error) {
-      console.log("OTP Error:", error.response?.data?.message || error.message);
+      console.log("OTP Error:",error);
       setError("Failed to send OTP. Please try again.");
     }
   };

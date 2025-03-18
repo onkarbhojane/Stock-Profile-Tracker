@@ -13,6 +13,18 @@ import OTP from './Components/Chart/OTP.jsx'
 import StockTransaction from './Components/Chart/StockTransaction.jsx'
 import Main from './Components/Knowledge Center/Main.jsx'
 import StockNews from './Demo.jsx'
+import About from './Components/Details/About.jsx'
+import Courses from './Components/Tools/Courses.jsx'
+import Books from './Components/Tools/Books.jsx'
+import Reader from './Components/Tools/Reader.jsx'
+import PDFViewer from './Components/Tools/PDFViewer.jsx'
+import CandleStick from './Components/Chart/CandleStick.jsx'
+import HelpCenter from './Components/Details/HelpCenter.jsx'
+import Documentation from './Components/Details/Documentation.jsx'
+import PortfolioBuilder from './Components/Portfolio Builder/PortfolioBuilder.jsx'
+import PaperTrading from './Components/Paper Trading/PaperTrading.jsx'
+import TradingAnalysis from './Components/Trading Analysis/TradingAnalysis.jsx'
+import Portfolio from './Portfolio.jsx'
 function App() {
   return (
     <BrowserRouter>
@@ -25,9 +37,21 @@ function App() {
         <Route path='/sip' element={<SIPCalculator/>}/>
         <Route path='/trading' element={<TradingView/>}/>
         <Route path='/dd' element={<StockNews/>}/>
+        <Route path='/about' element={<About/>}/>
         <Route path='/buy/verification' element={<OTP/>}/>
+        <Route path='/sell/verification' element={<OTP/>}/>
         <Route path ='/stock/verification/done' element={<StockTransaction/>}/>
         <Route path='/knowledge_center' element={<Main/>}/>
+        <Route path='/courses' element={<Courses/>}/>
+        <Route path='/books' element={<Books/>}/>
+        <Route path='/read' element={<PDFViewer/>}/>
+        <Route path='/help-center' element={<HelpCenter/>}/>
+        <Route path='/documentation' element={<Documentation/>}/>
+        <Route path='/candlestick/:symbol' element={<CandleStick/>}/>
+        <Route path='/portfolio-builder' element={<PortfolioBuilder/>}/>
+        <Route path='/paper-trading' element={<PaperTrading/>}/>
+        <Route path='/trading-analysis' element={<TradingAnalysis/>}/>
+        <Route path='/port' element={<Portfolio/>}/>
         <Route path='*' element={<h1>Page is in the Development state</h1>}/>
       </Routes>
     </BrowserRouter>

@@ -1,6 +1,7 @@
 import axios from "axios";
-
-const API_KEY = "AIzaSyAfi1ny6ADVRcZGZRtYiIh99Df_g5Vb5nM";
+import dotenv from 'dotenv';
+dotenv.config();
+const API_KEY=process.env.API_KEY;
 const API_URL = "https://www.googleapis.com/youtube/v3/";
 
 const fetchVideos = async (query) => {

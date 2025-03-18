@@ -1,11 +1,14 @@
 import mongoose from "mongoose";
-const connection_url = "mongodb://localhost:27017/Stock";
-const conn=()=>{
+const conn= async()=>{
     try{
-        console.log("connecting to DB");
-        mongoose.connect(connection_url);
+        const res=await mongoose.connect(`mongodb+srv://onkarbhojane22:Onkar%401234@cluster0.rdojecr.mongodb.net/Stock?retryWrites=true&w=majority&appName=Cluster0`);
+        if(res){
+            console.log("connected to DB")
+        }else{
+            console.log("connection failed ");
+        }
     }catch(error){
-        console.log("error in connecting to DB",error);
+        console.log("connection error....",error)
     }
 }
 
