@@ -82,20 +82,11 @@ Stock-Profile-Tracker/
    
    # Create environment file
    cp .env.example .env
-   # Server Port
    PORT=8080
-   
-   # Email Service Credentials
    EMAIL_USER=your_email@example.com
    EMAIL_PASS=your_email_app_password
-   
-   # Stock Data API Key (e.g., Twelve Data, Alpha Vantage)
    API_KEY=your_stock_data_api_key
-   
-   # JWT Secret for Authentication
    PASS=your_jwt_secret_key
-   
-   # Razorpay Test Credentials
    TEST_KEY_ID=your_razorpay_test_key_id
    TEST_KEY_SECRET=your_razorpay_test_secret_key
 
