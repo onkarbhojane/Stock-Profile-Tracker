@@ -39,7 +39,7 @@ A full-stack web application that allows users to track, search, and monitor rea
 
 ```
 Stock-Profile-Tracker/
-├── client/                 # React Frontend
+├── frontend/                 # React Frontend
 │   ├── public/
 │   ├── src/
 │   │   ├── components/     # Reusable UI components
@@ -50,7 +50,7 @@ Stock-Profile-Tracker/
 │   │   └── App.jsx         # Main App component
 │   ├── package.json
 │   └── vite.config.js
-├── server/                 # Node.js Backend
+├── backend/                 # Node.js Backend
 │   ├── routes/             # API routes
 │   ├── controllers/        # Business logic
 │   ├── middleware/         # Custom middleware
@@ -187,10 +187,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Onkar Bhojane**
 
-- 🌐 [Portfolio](https://your-portfolio-url.com)
-- 💼 [LinkedIn](https://linkedin.com/in/your-profile)
+- 🌐 [Portfolio](https://portfolio-beige-five-31.vercel.app/)
+- 💼 [LinkedIn](https://www.linkedin.com/in/onkar-bhojane)
 - 🐱 [GitHub](https://github.com/onkarbhojane)
-- 📧 [Email](mailto:your.email@example.com)
+- 📧 [Email](onkarbhojane2002@gmail.com)
 
 ## ⭐ Show your support
 
