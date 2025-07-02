@@ -120,14 +120,10 @@ GEMINI_KEY=your_gemini_api_key
 
 ## 📱 Screenshots
 
-> 📝 **Note**: Add screenshots or demo GIFs here to showcase your application
-
-```markdown
-![Dashboard](./screenshots/dashboard.png)
-![Stock Search](./screenshots/search.png)
-![Stock Details](./screenshots/details.png)
+![image](https://github.com/user-attachments/assets/90dd54b2-5fc1-4aec-82a8-b0ddc936ba2f)
+![image](https://github.com/user-attachments/assets/f6168746-ef75-4b08-949d-4ac5bda5d720)
+![image](https://github.com/user-attachments/assets/03250c6b-d2b3-498f-9617-13527011ad0b)
 ```
-
 ## 🌐 Live Demo
 
 🚀 **[View Live Demo](https://stock-profile-tracker-patl-git-main-onkarbhojanes-projects.vercel.app/)**
