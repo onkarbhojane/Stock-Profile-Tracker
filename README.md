@@ -68,7 +68,7 @@ Stock-Profile-Tracker/
 
 - **Node.js** (v16 or higher)
 - **npm** or **yarn**
-- **API Key** from [Twelve Data](https://twelvedata.com/) or similar provider
+- **Real time stock data by using web scraping** 
 
 ### Installation
 
