@@ -32,9 +32,6 @@ A full-stack web application that allows users to track, search, and monitor rea
 - **Axios** - HTTP client for external APIs
 - **dotenv** - Environment configuration
 
-### External APIs
-- **[Twelve Data API](https://twelvedata.com/)** - Real-time stock market data
-
 ## 📁 Project Structure
 
 ```
@@ -102,7 +99,7 @@ Stock-Profile-Tracker/
    TEST_KEY_ID=your_razorpay_test_key_id
    TEST_KEY_SECRET=your_razorpay_test_secret_key
 
-# Gemini API Key (for crypto or AI integration)
+# Gemini API Key (for messaging or AI integration)
 GEMINI_KEY=your_gemini_api_key
 
    npm start
@@ -142,23 +139,6 @@ GEMINI_KEY=your_gemini_api_key
 | GET | `/api/search/:query` | Search stocks by name/ticker |
 | GET | `/api/stock/:symbol` | Get detailed stock information |
 | GET | `/api/chart/:symbol` | Get historical chart data |
-
-## 🔧 Environment Variables
-
-Create a `.env` file in the server directory:
-
-```env
-# Server Configuration
-PORT=5000
-NODE_ENV=development
-
-# API Configuration
-API_KEY=your_twelve_data_api_key
-API_BASE_URL=https://api.twelvedata.com
-
-# CORS Configuration (optional)
-CLIENT_URL=http://localhost:5173
-```
 
 ## 🎯 Future Enhancements
 
