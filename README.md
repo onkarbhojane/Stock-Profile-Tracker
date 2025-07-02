@@ -133,7 +133,7 @@ GEMINI_KEY=your_gemini_api_key
 
 ## 🌐 Live Demo
 
-🚀 **[View Live Demo](https://stock-profile-tracker-patl-git-main-onkarbhojanes-projects.vercel.app/)** *(Add your deployment link)*
+🚀 **[View Live Demo](https://stock-profile-tracker-patl-git-main-onkarbhojanes-projects.vercel.app/)**
 
 ## 📈 API Endpoints
 
