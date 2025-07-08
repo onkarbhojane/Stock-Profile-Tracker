@@ -15,19 +15,16 @@ const StockTransaction = () => {
   const dispatch = useDispatch();
   const [count, setCount] = useState(10);
 
-  // Format currency values
   const formatCurrency = (value) => {
     if (typeof value !== "number") return "N/A";
     return `$${value.toFixed(2)}`;
   };
 
-  // Get token from cookies
   const cookieToken = document.cookie
     .split("; ")
     .find((row) => row.startsWith("token="))
     ?.split("=")[1];
 
-  // Navigation blocking effect
   useEffect(() => {
     window.history.pushState(null, "", "/");
     const preventBack = () => window.history.pushState(null, "", "/");
@@ -35,7 +32,6 @@ const StockTransaction = () => {
     return () => window.removeEventListener("popstate", preventBack);
   }, []);
 
-  // Transaction handling effect
   useEffect(() => {
     const handleTransaction = async () => {
       if (!transaction?.Symbol) return;
@@ -77,7 +73,6 @@ const StockTransaction = () => {
     handleTransaction();
   }, [transaction, cookieToken, dispatch]);
 
-  // Auto-redirect timer effect
   useEffect(() => {
     const autoRedirectTimer = setTimeout(() => {
       navigate("/", { replace: true });

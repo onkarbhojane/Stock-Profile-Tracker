@@ -64,7 +64,6 @@ const Navbar = ({
     }));
   };
 
-  // Handle clicks outside dropdowns
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {

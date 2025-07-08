@@ -12,7 +12,6 @@ const FrontPage = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Get token from cookies
         const cookieToken = document.cookie
           .split('; ')
           .find(row => row.startsWith('token='))
@@ -29,7 +28,6 @@ const FrontPage = () => {
             }
           );
           console.log(response.data.data,"frontpage");
-          // Ensure response structure matches Redux expectations
           const userData = {
             Name: response.data.data.Name || '',
             EmailID: response.data.data.EmailID || '',
@@ -38,7 +36,6 @@ const FrontPage = () => {
             TotalAmount: response.data.data.TotalAmount || 0,
             WalletAmount: response.data.data.WalletAmount || 0,
             isVerified: response.data.data.isVerified || false,
-            // Calculated fields (initialize if not provided)
             netProfit: response.data.data.netProfit || 0,
             annualReturn: response.data.data.annualReturn || 0
           };
@@ -63,15 +60,13 @@ const FrontPage = () => {
         }
       } catch (error) {
         console.error('Authentication error:', error);
-        // Clear invalid credentials
         dispatch(logout());
-        // Optionally redirect to login
         // navigate('/login');
       }
     };
   
     fetchUserData();
-  }, [dispatch]); // Add dependencies if needed
+  }, [dispatch]);
   return (
     <>
       <Navbar />

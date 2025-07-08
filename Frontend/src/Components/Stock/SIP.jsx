@@ -12,7 +12,6 @@ const Calculator = () => {
   useEffect(() => {
       const fetchUserData = async () => {
         try {
-          // Get token from cookies
           const cookieToken = document.cookie
             .split('; ')
             .find(row => row.startsWith('token='))
@@ -29,7 +28,6 @@ const Calculator = () => {
               }
             );
             console.log(response.data.data,"frontpage");
-            // Ensure response structure matches Redux expectations
             const userData = {
               Name: response.data.data.Name || '',
               EmailID: response.data.data.EmailID || '',
@@ -38,7 +36,6 @@ const Calculator = () => {
               TotalAmount: response.data.data.TotalAmount || 0,
               WalletAmount: response.data.data.WalletAmount || 0,
               isVerified: response.data.data.isVerified || false,
-              // Calculated fields (initialize if not provided)
               netProfit: response.data.data.netProfit || 0,
               annualReturn: response.data.data.annualReturn || 0
             };
@@ -63,9 +60,7 @@ const Calculator = () => {
           }
         } catch (error) {
           console.error('Authentication error:', error);
-          // Clear invalid credentials
           dispatch(logout());
-          // Optionally redirect to login
           // navigate('/login');
         }
       };
@@ -114,7 +109,6 @@ const Calculator = () => {
   );
 };
 
-// Fixed Deposit Calculator
 const FDCalculator = () => {
   const [principal, setPrincipal] = useState(100000);
   const [interestRate, setInterestRate] = useState(6.5);

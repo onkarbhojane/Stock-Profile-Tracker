@@ -8,7 +8,6 @@ const Portfolio = () => {
     { name: 'Languages', items: 'C, C++, Python, Java, JavaScript, SQL' },
     { name: 'Web Development', items: 'MERN Stack' },
     { name: 'Database', items: 'MySQL, MongoDB' },
-    // Add all skills...
   ];
 
   const projects = [
@@ -18,12 +17,10 @@ const Portfolio = () => {
       description: 'Built Trie-based search...',
       links: { demo: '#', github: '#' }
     },
-    // Add other projects...
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100">
-      {/* Header Section */}
       <motion.header 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -48,7 +45,6 @@ const Portfolio = () => {
         </div>
       </motion.header>
 
-      {/* Skills Section */}
       <section className="py-16 px-4 max-w-6xl mx-auto">
         <h2 className="text-3xl font-bold mb-8 text-center">Skills</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -67,7 +63,6 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Projects Section */}
       <section className="py-16 px-4 max-w-6xl mx-auto">
         <h2 className="text-3xl font-bold mb-8 text-center">Projects</h2>
         <div className="space-y-8">
@@ -93,7 +88,6 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Add other sections similarly with animations */}
     </div>
   );
 };

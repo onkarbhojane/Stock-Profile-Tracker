@@ -63,7 +63,6 @@ const LineChart = () => {
   const refb = useRef(null);
   const [chart, setChart] = useState("line");
 
-  // Reset historical data and symbol when symbol changes
   useEffect(() => {
     setStockData((prev) => ({
       ...prev,

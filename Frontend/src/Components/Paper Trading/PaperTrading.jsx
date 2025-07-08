@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 const PaperTrading = () => {
   const navigate = useNavigate();
-  const [balance, setBalance] = useState(100000); // Starting balance
+  const [balance, setBalance] = useState(100000); 
   const [positions, setPositions] = useState([]);
   const [newTrade, setNewTrade] = useState({
     symbol: "",
     quantity: "",
-    action: "buy", // buy or sell
+    action: "buy", 
   });
 
   const handleExecuteTrade = (e) => {
@@ -17,7 +17,7 @@ const PaperTrading = () => {
       const trade = {
         ...newTrade,
         id: Date.now(),
-        price: Math.random() * 100 + 50, // Simulated price
+        price: Math.random() * 100 + 50, 
         timestamp: new Date().toLocaleString(),
       };
       setPositions([...positions, trade]);

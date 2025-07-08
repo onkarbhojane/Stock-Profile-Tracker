@@ -15,7 +15,6 @@ const TradingAnalysis = () => {
   const navigate = useNavigate();
   const [timeFrame, setTimeFrame] = useState("1D"); // 1D, 1W, 1M, 1Y
 
-  // Sample data for the chart
   const chartData = [
     { time: "09:00", price: 145.0 },
     { time: "10:00", price: 146.5 },
@@ -27,7 +26,6 @@ const TradingAnalysis = () => {
     { time: "16:00", price: 147.9 },
   ];
 
-  // Sample portfolio performance data
   const portfolioPerformance = [
     { metric: "Total Return", value: "+12.5%" },
     { metric: "Annualized Return", value: "+15.8%" },

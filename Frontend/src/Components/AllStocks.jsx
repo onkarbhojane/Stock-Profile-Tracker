@@ -15,7 +15,6 @@ const AllStocks = () => {
 
   const itemsPerPage = 20;
 
-  // Sample stock data with numeric values
   const allStocks = Array.from({ length: 100 }, (_, i) => ({
     symbol: `STK${i + 1}`,
     name: `Stock ${i + 1}`,
@@ -79,7 +78,6 @@ const AllStocks = () => {
     })()
   },[symbols])
 
-  // Filtering logic
   const filteredStocks = stocks
     .filter((stock) => {
       const matchesSearch =
@@ -112,7 +110,6 @@ const AllStocks = () => {
       return sortDirection === "asc" ? comparison : -comparison;
     });
 
-  // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentStocks = filteredStocks.slice(indexOfFirstItem, indexOfLastItem);

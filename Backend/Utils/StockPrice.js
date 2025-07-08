@@ -6,16 +6,12 @@ const StockPrice = async (req, res) => {
   const url = `https://www.google.com/finance/quote/${symbol}:NSE`;
 
   try {
-    // Fetch the HTML content of the page
     const response = await axios.get(url);
 
-    // Parse the HTML with cheerio
     const $ = cheerio.load(response.data);
 
-    // Extract stock information using cheerio selectors
-    const stockPrice = $('.YMlKec.fxKbKc').text().trim();  // Current stock price
+    const stockPrice = $('.YMlKec.fxKbKc').text().trim();  
 
-    // Extract the other values based on provided HTML structure
     const prevClose = $('.gyFHrc').eq(0).find('.P6K39c').text().trim();  // Previous close price
     const todayRange = $('.gyFHrc').eq(1).find('.P6K39c').text().trim();  // Today's range
     const yearRange = $('.gyFHrc').eq(2).find('.P6K39c').text().trim();   // Yearly range
@@ -25,7 +21,6 @@ const StockPrice = async (req, res) => {
     const dividendYield = $('.gyFHrc').eq(7).find('.P6K39c').text().trim(); // Dividend Yield
     const primaryExchange = $('.gyFHrc').eq(8).find('.P6K39c').text().trim(); // Primary Exchange
 
-    // Log the extracted values for debugging
     console.log('Stock Price:', stockPrice);
     console.log('Previous Close:', prevClose);
     console.log('Today\'s Range:', todayRange);
@@ -36,7 +31,6 @@ const StockPrice = async (req, res) => {
     console.log('Dividend Yield:', dividendYield);
     console.log('Primary Exchange:', primaryExchange);
 
-    // Respond with the stock data
     res.json({
       stockPrice,
       prevClose,

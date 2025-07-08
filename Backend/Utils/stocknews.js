@@ -5,7 +5,6 @@ const stocknews = async (req, res) => {
     console.log("req got ")
     const { symbol } = req.query;
     
-    // Validate symbol input
     if (!symbol || typeof symbol !== 'string') {
         return res.status(400).json({ error: 'Invalid stock symbol' });
     }
@@ -18,7 +17,7 @@ const stocknews = async (req, res) => {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
                 'Accept-Language': 'en-US,en;q=0.9',
             },
-            timeout: 10000 // 10 seconds timeout
+            timeout: 10000 
         });
 
         if (response.status !== 200) {
@@ -28,18 +27,15 @@ const stocknews = async (req, res) => {
         const $ = cheerio.load(response.data);
         const newsItems = [];
 
-        // Iterate through each news item container
         $('.yY3Lee .z4rs2b').each((index, element) => {
             try {
                 const $element = $(element);
                 
-                // Extract news details with fallbacks
                 const title = $element.find('.Yfwt5').text().trim() || 'No title available';
                 const source = $element.find('.sfyJob').text().trim() || 'Unknown source';
                 const time = $element.find('.Adak').text().trim() || 'Unknown time';
                 const rawLink = $element.find('a[jslog]').attr('href');
                 
-                // Validate and format URL
                 let link = '';
                 if (rawLink) {
                     link = rawLink.startsWith('http') ? rawLink : 
@@ -51,17 +47,16 @@ const stocknews = async (req, res) => {
                     title,
                     source,
                     time,
-                    link: link || '#' // Fallback for empty links
+                    link: link || '#' 
                 });
             } catch (elementError) {
                 console.error('Error processing news element:', elementError);
             }
         });
 
-        // Limit results and filter invalid entries
         const filteredNews = newsItems
             .filter(item => item.link !== '#')
-            .slice(0, 10); // Limit to 10 items
+            .slice(0, 10); 
         console.log(filteredNews)
         res.json({ 
             symbol,

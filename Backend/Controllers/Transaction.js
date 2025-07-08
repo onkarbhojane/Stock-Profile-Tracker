@@ -30,7 +30,6 @@ const StockTransaction = async (req, res) => {
     const { transaction } = req.body;
     const userId = req.userPayload._id;
 
-    // Validation
     if (!transaction || !transaction.Symbol || !transaction.Quantity || !transaction.type) {
       return res.status(400).json({ message: "Invalid transaction data" });
     }
@@ -40,27 +39,22 @@ const StockTransaction = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Handle BUY Transaction
     if (transaction.type.toUpperCase() === "BUY") {
       if (user.WalletAmount < transaction.estimatedCost) {
         return res.status(400).json({ message: "Insufficient funds" });
       }
 
-      // Update wallet
       user.WalletAmount -= transaction.estimatedCost;
 
-      // Find existing stock
       const existingStock = user.Stocks.find(
         stock => stock.symbol === transaction.Symbol
       );
 
       if (existingStock) {
-        // Update existing stock
         existingStock.quantity += parseInt(transaction.Quantity);
         existingStock.totalInvested += transaction.estimatedCost;
         existingStock.avgPrice = existingStock.totalInvested / existingStock.quantity;
       } else {
-        // Add new stock
         user.Stocks.push({
           symbol: transaction.Symbol,
           quantity: parseInt(transaction.Quantity),
@@ -69,7 +63,6 @@ const StockTransaction = async (req, res) => {
         });
       }
 
-    // Handle SELL Transaction
     } else if (transaction.type.toUpperCase() === "SELL") {
       const existingStock = user.Stocks.find(
         stock => stock.symbol === transaction.Symbol
@@ -83,14 +76,11 @@ const StockTransaction = async (req, res) => {
         return res.status(400).json({ message: "Insufficient stock quantity" });
       }
 
-      // Update wallet
       user.WalletAmount += transaction.estimatedCost;
 
-      // Update stock details
       existingStock.quantity -= parseInt(transaction.Quantity);
       existingStock.totalInvested -= existingStock.avgPrice * transaction.Quantity;
 
-      // Remove stock if quantity reaches zero
       if (existingStock.quantity <= 0) {
         user.Stocks = user.Stocks.filter(
           stock => stock.symbol !== transaction.Symbol
@@ -100,7 +90,6 @@ const StockTransaction = async (req, res) => {
       return res.status(400).json({ message: "Invalid transaction type" });
     }
 
-    // Record transaction
     user.Transactions.push({
       symbol: transaction.Symbol,
       quantity: transaction.Quantity,
@@ -141,7 +130,7 @@ const create_order = async (req, res) => {
     const { amount, currency } = req.body;
     console.log(process.env.TEST_KEY_ID, process.env.TEST_KEY_SECRET);
     const options = {
-      amount: amount * 100, // Convert to paisa (INR)
+      amount: amount * 100, 
       currency,
       receipt: `receipt_${Math.random() * 1000}`,
     };

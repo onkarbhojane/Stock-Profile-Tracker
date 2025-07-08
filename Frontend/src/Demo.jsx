@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const StockNews = () => {
-  const [news, setNews] = useState([]); // Initialize with an empty array
+  const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -13,7 +13,6 @@ const StockNews = () => {
           "http://localhost:3000/service/stockprice?symbol=IREDA"
         );
         console.log(response.data);
-        // You might want to update the state with stockPrice here
         setNews((prevNews) => [...prevNews, { stockPrice: response.data.stockPrice }]);
       } catch (Error) {
         console.log("error in getting price of stock");
@@ -22,20 +21,18 @@ const StockNews = () => {
     };
     fetchData();
 
-    // Using a loop to make repeated calls with delay
     const fetchMultipleData = () => {
       for (let i = 0; i < 10; i++) {
         setTimeout(() => {
-        }, i * 2000); // Delay increases by 2 seconds for each call
+        }, i * 2000); 
       }
     };
 
     fetchMultipleData();
 
-    // Cleanup: reset loading state after all fetches complete
     setLoading(false);
 
-  }, []); // Run only once when the component mounts
+  }, []); 
 
   if (loading) {
     return <div>Loading...</div>;

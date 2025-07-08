@@ -52,18 +52,14 @@ class Trie {
   }
 }
 
-// Initialize Trie
 let API = new Trie();
-// Load the Excel file
 const workbook = xlsx.readFile("./Utils/stockNames.xlsx");
 const sheetNames = workbook.SheetNames;
-const worksheet = workbook.Sheets[sheetNames[0]]; // Ensure we select the first sheet correctly
+const worksheet = workbook.Sheets[sheetNames[0]]; 
 
-// Convert Excel data to JSON
 const jsonData = xlsx.utils.sheet_to_json(worksheet);
 
-// Extract and validate column values
-const columnName = "Symbol"; // Change as per your Excel file
+const columnName = "Symbol";
 const ColumnName1 = "Company Name";
 const columnValues = jsonData
   .map((row) => row[columnName])
@@ -71,12 +67,11 @@ const columnValues = jsonData
 
 const columnValues1 = jsonData
   .map((row) => row[ColumnName1])
-  .filter((value) => typeof value === "string"); // Remove undefined/null values
+  .filter((value) => typeof value === "string"); 
 
 for (let i = 0; i < columnValues.length; i++) {
   API.Names.set(columnValues[i], columnValues1[i]);
 }
-// Insert valid values into Trie
 for (let i = 0; i < columnValues.length; i++) {
   try {
     API.insert(columnValues[i]);

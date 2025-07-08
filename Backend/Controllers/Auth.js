@@ -26,7 +26,6 @@ const login = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-// done 
 const OTPVerify = (req, res) => {
   console.log("Register");
   console.log(req.body);
@@ -69,10 +68,8 @@ const register = async (req, res) => {
     if (data.EmailID===email) {
       return res.status(400).json({ message: "User Already Exist" });
     }
-    // Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user instance
     const newUser = new User({
       Name: name,
       EmailID: email,

@@ -62,14 +62,12 @@ const Dashboard = () => {
       fetchUserData();
     }, [dispatch, navigate]);
   
-  // Sample data - replace with real API data
   const indices = [
     {
       name: "S&P 500",
       value: "4,567.89",
       change: "+1.23%",
       chartData: [
-        /*...*/
       ],
     },
     {

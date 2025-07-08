@@ -6,7 +6,6 @@ const API_URL = "https://www.googleapis.com/youtube/v3/";
 
 const fetchVideos = async (query) => {
   try {
-    // Step 1: Search for videos
     const searchUrl = `${API_URL}search?part=snippet&type=video&q=${encodeURIComponent(
       query
     )}&key=${API_KEY}&maxResults=10`;
@@ -20,17 +19,15 @@ const fetchVideos = async (query) => {
       .map((item) => item.id.videoId)
       .join(",");
 
-    // Step 2: Get detailed video information
     const videosUrl = `${API_URL}videos?part=snippet,contentDetails,player&id=${videoIds}&key=${API_KEY}`;
     const videosResponse = await axios.get(videosUrl);
     if (videosResponse.data.items.length === 0) {
       throw new Error("No video details found.");
     }
 
-    // Step 3: Process video data
     const videoData = await Promise.all(
       videosResponse.data.items.map(async (video) => {
-        const captionInfo = await fetchCaptions(video.id); // Fetch captions if available
+        const captionInfo = await fetchCaptions(video.id); 
 
         return {
           title: video.snippet.title,
@@ -60,7 +57,6 @@ const fetchVideos = async (query) => {
   }
 };
 
-// Helper function to fetch captions (requires OAuth2 authorization)
 const fetchCaptions = async (videoId) => {
   try {
     const captionsUrl = `${API_URL}captions?part=snippet&videoId=${videoId}&key=${API_KEY}`;
@@ -86,7 +82,6 @@ const Knowledge_Center = (req, res) => {
 
   fetchVideos(search)
     .then((videos) => {
-      // Responding with the videos data
       res.status(200).json({ videos });
     })
     .catch((error) => {

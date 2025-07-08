@@ -50,7 +50,6 @@ const Histogram = () => {
             },
         });
 
-        // Cleanup on unmount
         return () => {
             if (chartInstanceRef.current) {
                 chartInstanceRef.current.destroy();

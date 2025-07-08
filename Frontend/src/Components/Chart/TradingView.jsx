@@ -12,7 +12,6 @@ import {
 import { CandlestickController, CandlestickElement } from 'chartjs-chart-financial';
 import ChartjsPluginZoom from 'chartjs-plugin-zoom';
 
-// Register required components
 ChartJS.register(
   LinearScale,
   TimeScale,
@@ -24,7 +23,6 @@ ChartJS.register(
   ChartjsPluginZoom
 );
 const CandleStickModal = ({ onClose }) => {
-  // Sample data - replace with real API data
   const generateSampleData = () => {
     const data = [];
     let date = new Date(2023, 0, 1);
@@ -141,7 +139,6 @@ const CandleStickModal = ({ onClose }) => {
   );
 };
 
-// Usage example in parent component:
 const TradingView = () => {
   const [showModal, setShowModal] = useState(false);
 

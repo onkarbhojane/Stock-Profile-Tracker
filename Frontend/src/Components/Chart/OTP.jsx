@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const OTP = ({ close }) => {  // Added close prop for modal dismissal
+const OTP = ({ close }) => {  
   const [timer, setTimer] = useState(30);
   const [otpValue, setOtpValue] = useState(Array(6).fill(""));
-  const [otp, setOtp] = useState("");  // Changed to string type
+  const [otp, setOtp] = useState("");  
   const [error, setError] = useState("");
   const inputRefs = useRef([]);
   const navigate = useNavigate();
-  const user = useSelector(state => state.Auth.user);  // Fixed selector syntax
-  const cookieToken = document.cookie.split('=')[1];  // Get cookie token (adjust based on your auth setup)
+  const user = useSelector(state => state.Auth.user);  
+  const cookieToken = document.cookie.split('=')[1];  
 
   const generateOTP = () => {
     let newOtp = "";
@@ -74,7 +74,7 @@ const OTP = ({ close }) => {  // Added close prop for modal dismissal
     const enteredOtp = otpValue.join("");
     if (enteredOtp === otp) {
       navigate('/stock/verification/done');
-      close?.();  // Close modal if provided
+      close?.(); 
     } else {
       setError("Invalid OTP. Please try again.");
     }

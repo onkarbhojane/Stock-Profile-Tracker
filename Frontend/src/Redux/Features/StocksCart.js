@@ -16,12 +16,10 @@ const StockSlice = createSlice({
       );
 
       if (existingStock) {
-        // Update existing stock
         existingStock.quantity += action.payload.quantity;
         existingStock.totalInvested +=
           action.payload.price * action.payload.quantity;
       } else {
-        // Add new stock
         state.stockList.push({
           symbol: action.payload.symbol,
           quantity: action.payload.quantity,
@@ -31,7 +29,6 @@ const StockSlice = createSlice({
         });
       }
 
-      // Add transaction
       state.Transactions.push({
         type: "BUY",
         symbol: action.payload.symbol,
@@ -46,7 +43,6 @@ const StockSlice = createSlice({
       );
 
       if (index !== -1) {
-        // Add transaction before removing
         state.Transactions.push({
           type: "SELL",
           symbol: action.payload.symbol,
